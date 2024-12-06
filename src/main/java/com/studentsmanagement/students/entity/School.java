@@ -2,8 +2,6 @@ package com.studentsmanagement.students.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "School")
 public class School {
@@ -16,8 +14,17 @@ public class School {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "school")
-    private List<Students>students;
+    /*@OneToMany(mappedBy = "school")
+    private Students students;
+    //private List<Students>students;
+
+    public Students getStudents() {
+        return students;
+    }
+
+    public void setStudents(Students students) {
+        this.students = students;
+    }*/
 
     public int getId() {
         return id;
@@ -49,6 +56,7 @@ public class School {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                /*", students=" + students +*/
                 '}';
     }
 }

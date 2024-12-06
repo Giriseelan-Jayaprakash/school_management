@@ -19,8 +19,16 @@ public class Students {
     private long contactNumber;
 
     @ManyToOne()
-    @JoinColumn(name = "school_id")
+    //@JoinColumn(name = "school_id")
     private School school;
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
 
     public int getId() {
         return id;
@@ -60,7 +68,8 @@ public class Students {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", contactNumber=" + contactNumber +
+                ", contactNumber=" + contactNumber/* +
+                ", school=" + school */+
                 '}';
     }
 }

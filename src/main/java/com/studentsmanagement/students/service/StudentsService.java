@@ -19,9 +19,28 @@ public class StudentsService {
         return this.studentsRepository.save(students);
     }
 
-    public Students getStudentById(final int id) {
+    public Students getStudentById(final Integer id) {
+        if(id==null){
+            throw new IllegalArgumentException("Invalid ID");
+        }
         Optional<Students> students = this.studentsRepository.findById(id);
-        return students.orElse(null);
+        if(students.isPresent()){
+            return students.get();
+        }
+        else {
+            throw new IllegalArgumentException("Student not found for ID: " + id);
+        }
+//        if(id!=null){
+//        Optional<Students> students = this.studentsRepository.findById(id);
+//            return students.orElseThrow(()-> new IllegalArgumentException("Students not found for ID"+ id));
+//        }
+//        return null;
+
+//        Optional<Students> students = this.studentsRepository.findById(id);
+//        if(students.isEmpty()){
+//            throw new IllegalArgumentException("Students not found for ID");
+//        }
+//        return students.get();
     }
 
     public List<Students> getAllStudents() {
