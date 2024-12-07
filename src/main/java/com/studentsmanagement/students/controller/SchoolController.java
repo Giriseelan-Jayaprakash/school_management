@@ -13,7 +13,7 @@ public class SchoolController {
 
     public SchoolController(final SchoolService schoolService) {
         this.schoolService = schoolService;
-    }
+    }//
 
     @PostMapping("")
     public School createSchool(@RequestBody final School school) {
