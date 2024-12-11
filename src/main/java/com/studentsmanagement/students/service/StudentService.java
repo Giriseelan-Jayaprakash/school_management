@@ -31,6 +31,17 @@ public class StudentService {
             throw new IllegalArgumentException("Student not found for ID: " + id);
         }
     }
+
+    public List<Student>getStudent(final String name){
+//        System.err.println(studentsRepository.findAll());
+        return this.studentsRepository.findByNameNative(name);
+//        return this.studentsRepository.findByNameNative(name);
+    }
+
+//    /*public List<Student>getStudent(final Integer id,final String name,final String address,final Long contactNumber){
+//        return this.studentsRepository.getStudent(id,name,address,contactNumber);
+//    }*/
+
 //        if(id!=null){
 //        Optional<Students> students = this.studentsRepository.findById(id);
 //            return students.orElseThrow(()-> new IllegalArgumentException("Students not found for ID"+ id));
@@ -52,7 +63,7 @@ public class StudentService {
     public Student updateStudentById(final Integer id, final Student students) {
         Optional<Student> studentsOptional = this.studentsRepository.findById(id);
         if (!studentsOptional.isPresent()) {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("Student not found");
         }
         Student student = studentsOptional.get();
         if (students.getName() != null) {

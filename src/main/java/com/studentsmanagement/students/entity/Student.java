@@ -3,7 +3,7 @@ package com.studentsmanagement.students.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "students")
+@Table(name = "student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Student {
     private long contactNumber;
 
     @ManyToOne()
-    //@JoinColumn(name = "school_id")
+    @JoinColumn(name = "school_id")
     private School school;
 
     public School getSchool() {
@@ -66,7 +66,7 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", contactNumber=" + contactNumber/* +
+                ", contactNumber=" + contactNumber /*+
                 ", school=" + school */+
                 '}';
     }
