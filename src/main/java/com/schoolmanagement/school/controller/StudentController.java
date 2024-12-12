@@ -1,10 +1,8 @@
-package com.studentsmanagement.students.controller;
+package com.schoolmanagement.school.controller;
 
-import com.studentsmanagement.students.entity.Student;
-import com.studentsmanagement.students.service.StudentService;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.schoolmanagement.school.entity.Student;
+import com.schoolmanagement.school.service.StudentService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +25,16 @@ public class StudentController {
     public Student getStudentById(@PathVariable("id") final Integer id) {
         return this.studentsService.getStudentById(id);
     }
+
     @GetMapping("/getStudent")
-    public List<Student>getStudent(@RequestBody final String name){
+    public List<Student> getStudent(@RequestBody final String name) {
         System.err.println(name);
         return this.studentsService.getStudent(name);
+    }
+
+    @GetMapping("/search")
+    public List<Student> searchStudents(final String search) {
+        return studentsService.findStudents(search);
     }
 
 //   /* @GetMapping("/getStudent")
@@ -51,11 +55,21 @@ public class StudentController {
     @PutMapping("/{id}")
     public Student updateStudentById(@RequestBody final Student students, @PathVariable("id") final Integer id) {
         students.setId(id);
-        return this.studentsService.updateStudentById(id,students);
+        return this.studentsService.updateStudentById(id, students);
     }
 
     @DeleteMapping("/{id}")
     public void deleteStudentById(@PathVariable("id") final Integer id) {
         this.studentsService.deleteStudentById(id);
     }
+
+    @GetMapping("/pagination")
+    public Page<Student> getAllStudent(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "id") String sorting,
+            @RequestParam(defaultValue = "true") boolean dire) {
+        return studentsService.findAll(page, size, sorting, dire);
+    }
+
 }

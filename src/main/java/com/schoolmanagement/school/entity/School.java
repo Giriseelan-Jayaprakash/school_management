@@ -1,4 +1,4 @@
-package com.studentsmanagement.students.entity;
+package com.schoolmanagement.school.entity;
 
 import jakarta.persistence.*;
 
@@ -52,10 +52,7 @@ public class School {
 
     @Override
     public String toString() {
-        return "School{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
+        return "School{" + "id=" + id + ", name='" + name + '\'' + ", address='" + address + '\'' +
                 /*", students=" + students +*/
                 '}';
     }

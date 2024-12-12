@@ -1,8 +1,12 @@
-package com.studentsmanagement.students.service;
+package com.schoolmanagement.school.service;
 
-import com.studentsmanagement.students.entity.Student;
-import com.studentsmanagement.students.repository.StudentRepository;
+import com.schoolmanagement.school.entity.Student;
+import com.schoolmanagement.school.repository.StudentRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,10 +36,14 @@ public class StudentService {
         }
     }
 
-    public List<Student>getStudent(final String name){
+    public List<Student> getStudent(final String name) {
 //        System.err.println(studentsRepository.findAll());
         return this.studentsRepository.findByNameNative(name);
 //        return this.studentsRepository.findByNameNative(name);
+    }
+
+    public List<Student> findStudents(final String search) {
+        return studentsRepository.findStudents(search);
     }
 
 //    /*public List<Student>getStudent(final Integer id,final String name,final String address,final Long contactNumber){
@@ -62,7 +70,7 @@ public class StudentService {
     @Transactional
     public Student updateStudentById(final Integer id, final Student students) {
         Optional<Student> studentsOptional = this.studentsRepository.findById(id);
-        if (!studentsOptional.isPresent()) {
+        if (studentsOptional.isEmpty()) {
             throw new RuntimeException("Student not found");
         }
         Student student = studentsOptional.get();
@@ -84,13 +92,17 @@ public class StudentService {
         if (id == null) {
             throw new IllegalArgumentException("Invalid ID");
         }
-        Optional<Student> students = this.studentsRepository.findById(id);
-        if (students.isPresent()) {
-            studentsRepository.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("Student not found");
-        }
+        final Student student = this.studentsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Student not found"));
         this.studentsRepository.deleteById(id);
     }
 
+//    public Page<Student> findAll(Pageable pageable){
+//        return studentsRepository.findAll(pageable);
+//    }
+
+
+    public Page<Student> findAll(int page, int size, String sorting, boolean dire) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(dire ? Sort.Direction.ASC : Sort.Direction.DESC, sorting));
+        return this.studentsRepository.findAll(pageable);
+    }
 }

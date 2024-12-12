@@ -1,6 +1,6 @@
-package com.studentsmanagement.students.repository;
+package com.schoolmanagement.school.repository;
 
-import com.studentsmanagement.students.entity.Student;
+import com.schoolmanagement.school.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,10 +9,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer> {
+public interface StudentRepository extends JpaRepository<Student,Integer> {
 
     @Query(value = "SELECT * FROM student WHERE name = :name", nativeQuery = true)
-    List<Student> findByNameNative(@Param("name") String name);
+    List<Student> findByNameNative(@Param("name") final String name);
+
+    @Query(value = "select s FROM Student s " +
+            "join s.school sc " +
+            "where (:search is null or " +
+            "(s.name like %:search% or s.address like %:search% " +
+            "OR sc.name like %:search% or sc.address like %:search%))",
+            nativeQuery = false)
+    List<Student> findStudents(@Param("search") final String search);
+
+
+
+
 
 //    List<Student> findAllByName(String name);
    /* @Query("SELECT * FROM Student  Where "

@@ -1,4 +1,4 @@
-package com.studentsmanagement.students.entity;
+package com.schoolmanagement.school.entity;
 
 import jakarta.persistence.*;
 
@@ -67,7 +67,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", contactNumber=" + contactNumber /*+
-                ", school=" + school */+
+                ", school=" + school */ +
                 '}';
     }
 }
