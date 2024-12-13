@@ -14,36 +14,36 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
-    private final StudentRepository studentsRepository;
+    private final StudentRepository studentRepository;
 
-    public StudentService(final StudentRepository studentsRepository) {
-        this.studentsRepository = studentsRepository;
+    public StudentService(final StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
-    public Student createStudents(final Student students) {
-        return this.studentsRepository.save(students);
+    public Student createStudent(final Student student) {
+        return this.studentRepository.save(student);
     }
 
-    public Student getStudentById(final Integer id) {
+    public Student retrieveById(final Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid ID");
         }
-        Optional<Student> students = this.studentsRepository.findById(id);
-        if (students.isPresent()) {
-            return students.get();
+        Optional<Student> student = this.studentRepository.findById(id);
+        if (student.isPresent()) {
+            return student.get();
         } else {
             throw new IllegalArgumentException("Student not found for ID: " + id);
         }
     }
 
-    public List<Student> getStudent(final String name) {
+    public List<Student> retrieveByName(final String name) {
 //        System.err.println(studentsRepository.findAll());
-        return this.studentsRepository.findByNameNative(name);
+        return this.studentRepository.retrieveByName(name);
 //        return this.studentsRepository.findByNameNative(name);
     }
 
-    public List<Student> findStudents(final String search) {
-        return studentsRepository.findStudents(search);
+    public List<Student> retrieveBySearch(final String search) {
+        return studentRepository.retrieveBySearch(search);
     }
 
 //    /*public List<Student>getStudent(final Integer id,final String name,final String address,final Long contactNumber){
@@ -63,37 +63,37 @@ public class StudentService {
 //        return students.get();
 //    }
 
-    public List<Student> getAllStudents() {
-        return this.studentsRepository.findAll();
+    public List<Student> retrieveAll() {
+        return this.studentRepository.findAll();
     }
 
     @Transactional
-    public Student updateStudentById(final Integer id, final Student students) {
-        Optional<Student> studentsOptional = this.studentsRepository.findById(id);
-        if (studentsOptional.isEmpty()) {
+    public Student updateById(final Integer id, final Student student) {
+        final Optional<Student> studentOptional = this.studentRepository.findById(id);
+        if (studentOptional.isEmpty()) {
             throw new RuntimeException("Student not found");
         }
-        Student student = studentsOptional.get();
-        if (students.getName() != null) {
-            student.setName(students.getName());
+        final Student studentObject = studentOptional.get();
+        if (student.getName() != null) {
+            studentObject.setName(student.getName());
         }
-        if (students.getAddress() != null) {
-            student.setAddress(students.getAddress());
+        if (student.getAddress() != null) {
+            studentObject.setAddress(student.getAddress());
         }
-        if (students.getContactNumber() != 0) {
-            student.setContactNumber(students.getContactNumber());
+        if (student.getContactNumber() != 0) {
+            studentObject.setContactNumber(student.getContactNumber());
         }
-        return this.studentsRepository.save(student);
+        if(student.getSchool()!=null){
+            studentObject.setSchool(student.getSchool());
+        }
+        return this.studentRepository.save(studentObject);
     }
-//            students.setId(id);
-//    }
-
-    public void deleteStudentById(final Integer id) {
+    public void deleteById(final Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid ID");
         }
-        final Student student = this.studentsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Student not found"));
-        this.studentsRepository.deleteById(id);
+        final Student student = this.studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Student not found"));
+        this.studentRepository.deleteById(id);
     }
 
 //    public Page<Student> findAll(Pageable pageable){
@@ -101,8 +101,8 @@ public class StudentService {
 //    }
 
 
-    public Page<Student> findAll(int page, int size, String sorting, boolean dire) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(dire ? Sort.Direction.ASC : Sort.Direction.DESC, sorting));
-        return this.studentsRepository.findAll(pageable);
+    public Page<Student> getPaginatedData(final int page,final int size,final String sorting,final boolean direction) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction ? Sort.Direction.ASC : Sort.Direction.DESC, sorting));
+        return this.studentRepository.findAll(pageable);
     }
 }

@@ -66,8 +66,7 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", contactNumber=" + contactNumber /*+
-                ", school=" + school */ +
+                ", contactNumber=" + contactNumber+
                 '}';
     }
 }

@@ -3,7 +3,7 @@ package com.schoolmanagement.school.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "School")
+@Table(name = "school")
 public class School {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,18 +13,6 @@ public class School {
     private String name;
     @Column(name = "address")
     private String address;
-
-    /*@OneToMany(mappedBy = "school")
-    private Students students;
-    //private List<Students>students;
-
-    public Students getStudents() {
-        return students;
-    }
-
-    public void setStudents(Students students) {
-        this.students = students;
-    }*/
 
     public int getId() {
         return id;
@@ -53,7 +41,6 @@ public class School {
     @Override
     public String toString() {
         return "School{" + "id=" + id + ", name='" + name + '\'' + ", address='" + address + '\'' +
-                /*", students=" + students +*/
                 '}';
     }
 }

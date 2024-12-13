@@ -12,7 +12,7 @@ import java.util.List;
 public interface StudentRepository extends JpaRepository<Student,Integer> {
 
     @Query(value = "SELECT * FROM student WHERE name = :name", nativeQuery = true)
-    List<Student> findByNameNative(@Param("name") final String name);
+    List<Student> retrieveByName(@Param("name") final String name);
 
     @Query(value = "select s FROM Student s " +
             "join s.school sc " +
@@ -20,7 +20,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
             "(s.name like %:search% or s.address like %:search% " +
             "OR sc.name like %:search% or sc.address like %:search%))",
             nativeQuery = false)
-    List<Student> findStudents(@Param("search") final String search);
+    List<Student> retrieveBySearch(@Param("search") final String search);
 
 
 

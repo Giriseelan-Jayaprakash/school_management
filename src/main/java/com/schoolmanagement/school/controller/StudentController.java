@@ -8,33 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/api/v1/student")
 public class StudentController {
-    private final StudentService studentsService;
+    private final StudentService studentService;
 
-    public StudentController(final StudentService studentsService) {
-        this.studentsService = studentsService;
+    public StudentController(final StudentService studentService) {
+        this.studentService = studentService;
     }
 
-    @PostMapping("")
-    public Student createStudents(@RequestBody final Student students) {
-        return this.studentsService.createStudents(students);
+    @PostMapping("/create")
+    public Student createStudent(@RequestBody final Student student) {
+        return this.studentService.createStudent(student);
     }
 
-    @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable("id") final Integer id) {
-        return this.studentsService.getStudentById(id);
+    @GetMapping("/retrieve/{id}")
+    public Student retrieveById(@PathVariable("id") final Integer id) {
+        return this.studentService.retrieveById(id);
     }
 
-    @GetMapping("/getStudent")
-    public List<Student> getStudent(@RequestBody final String name) {
+    @GetMapping("/retrieve-name")
+    public List<Student> retrieveStudent(final String name) {
         System.err.println(name);
-        return this.studentsService.getStudent(name);
+        return this.studentService.retrieveByName(name);
     }
 
-    @GetMapping("/search")
-    public List<Student> searchStudents(final String search) {
-        return studentsService.findStudents(search);
+    @GetMapping("/retrieve-search")
+    public List<Student> retrieveBySearch(final String search) {
+        return studentService.retrieveBySearch(search);
     }
 
 //   /* @GetMapping("/getStudent")
@@ -47,29 +47,28 @@ public class StudentController {
 //        return this.studentsService.getStudent(id,name,address,contactNumber);
 //    }*/
 
-    @GetMapping("")
-    public List<Student> getAllStudents() {
-        return this.studentsService.getAllStudents();
+    @GetMapping("/retrieve-all")
+    public List<Student> retrieveAll() {
+        return this.studentService.retrieveAll();
     }
 
-    @PutMapping("/{id}")
-    public Student updateStudentById(@RequestBody final Student students, @PathVariable("id") final Integer id) {
-        students.setId(id);
-        return this.studentsService.updateStudentById(id, students);
+    @PutMapping("/update/{id}")
+    public Student updateById(@RequestBody final Student student, @PathVariable("id") final Integer id) {
+        return this.studentService.updateById(id, student);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteStudentById(@PathVariable("id") final Integer id) {
-        this.studentsService.deleteStudentById(id);
+    @DeleteMapping("/delete/{id}")
+    public void deleteById(@PathVariable("id") final Integer id) {
+        this.studentService.deleteById(id);
     }
 
     @GetMapping("/pagination")
-    public Page<Student> getAllStudent(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size,
-            @RequestParam(defaultValue = "id") String sorting,
-            @RequestParam(defaultValue = "true") boolean dire) {
-        return studentsService.findAll(page, size, sorting, dire);
+    public Page<Student> getPaginatedData(
+            @RequestParam(defaultValue = "0") final int page,
+            @RequestParam(defaultValue = "2") final int size,
+            @RequestParam(defaultValue = "id") final String sorting,
+            @RequestParam(defaultValue = "true") final boolean direction) {
+        return studentService.getPaginatedData(page, size, sorting, direction);
     }
 
 }
