@@ -28,7 +28,7 @@ public class StudentController {
 
     @GetMapping("/retrieve-name")
     public List<Student> retrieveStudent(final String name) {
-        System.err.println(name);
+//        System.err.println(name);
         return this.studentService.retrieveByName(name);
     }
 
