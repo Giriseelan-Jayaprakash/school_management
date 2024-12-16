@@ -35,6 +35,8 @@ public class SchoolController {
         return this.schoolService.updateById(school, id);
     }
 
+
+
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable("id") final Integer id) {
         this.schoolService.deleteById(id);

@@ -28,7 +28,7 @@ public class StudentController {
 
     @GetMapping("/retrieve-name")
     public List<Student> retrieveStudent(final String name) {
-//        System.err.println(name);
+        System.err.println(name);
         return this.studentService.retrieveByName(name);
     }
 
@@ -48,9 +48,7 @@ public class StudentController {
 //    }*/
 
     @GetMapping("/retrieve-all")
-    public List<Student> retrieveAll() {
-        return this.studentService.retrieveAll();
-    }
+    public List<Student> retrieveAll() {return this.studentService.retrieveAll();}
 
     @PutMapping("/update/{id}")
     public Student updateById(@RequestBody final Student student, @PathVariable("id") final Integer id) {
